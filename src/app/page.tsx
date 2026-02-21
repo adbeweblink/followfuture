@@ -1,65 +1,91 @@
-import Image from "next/image";
+'use client';
+
+import { useState } from 'react';
+import { Flame, Sparkles } from 'lucide-react';
+import BirthInputForm from '@/components/BirthInputForm';
+import BaziDashboard from '@/components/BaziDashboard';
+import type { BirthInput, BaZiAnalysis } from '@/lib/bazi/types';
+import { performFullAnalysis } from '@/lib/bazi';
 
 export default function Home() {
+  const [analysis, setAnalysis] = useState<BaZiAnalysis | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = async (input: BirthInput) => {
+    setIsLoading(true);
+    try {
+      // 模擬短暫延遲讓使用者感受到處理中
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      const result = performFullAnalysis(input);
+      setAnalysis(result);
+    } catch (error) {
+      console.error('Error analyzing bazi:', error);
+      const errorMessage = error instanceof Error ? error.message : '未知錯誤';
+      const errorStack = error instanceof Error ? error.stack : '';
+      console.error('Error stack:', errorStack);
+      alert(`解盤過程發生錯誤：${errorMessage}\n\n請檢查 Console 獲取詳細資訊。`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // 顯示 BaziDashboard
+  if (analysis) {
+    return (
+      <BaziDashboard
+        analysis={analysis}
+        onBack={() => setAnalysis(null)}
+      />
+    );
+  }
+
+  // 顯示輸入表單
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="min-h-screen bg-gradient-to-b from-stone-50 to-stone-100">
+      {/* Header */}
+      <header className="bg-gradient-to-r from-red-800 to-red-900 text-white shadow-lg">
+        <div className="max-w-5xl mx-auto px-4 py-6">
+          <div className="flex items-center gap-3">
+            <Flame className="w-8 h-8 text-amber-400" />
+            <div>
+              <h1 className="text-2xl font-bold tracking-wider">八字命理分析系統</h1>
+              <p className="text-red-200 text-sm">專業排盤 · 精準解讀</p>
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </header>
+
+      <main className="max-w-5xl mx-auto px-4 py-8">
+        {/* 輸入表單 */}
+        <div className="max-w-md mx-auto">
+          <div className="bg-white rounded-2xl shadow-xl p-8 border border-stone-200">
+            <div className="text-center mb-8">
+              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Sparkles className="w-8 h-8 text-red-600" />
+              </div>
+              <h2 className="text-xl font-bold text-stone-800">開始您的命理分析</h2>
+              <p className="text-stone-500 text-sm mt-2">
+                請輸入您的出生資訊，系統將為您進行專業解盤
+              </p>
+            </div>
+
+            <BirthInputForm onSubmit={handleSubmit} isLoading={isLoading} />
+
+            <div className="mt-6 pt-6 border-t border-stone-100">
+              <p className="text-xs text-stone-400 text-center">
+                * 本系統僅供參考，命理分析結果不應作為重大決策的唯一依據
+              </p>
+            </div>
+          </div>
         </div>
       </main>
+
+      {/* Footer */}
+      <footer className="bg-stone-800 text-stone-400 py-6 mt-12">
+        <div className="max-w-5xl mx-auto px-4 text-center text-sm">
+          <p>© 2026 八字命理分析系統 · 僅供參考</p>
+        </div>
+      </footer>
     </div>
   );
 }
