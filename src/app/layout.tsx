@@ -17,6 +17,10 @@ const notoSerifTC = Noto_Serif_TC({
 export const metadata: Metadata = {
   title: "八字命理分析系統",
   description: "專業八字排盤與命理分析",
+  other: {
+    // Netlify 截圖延遲，等待字體載入
+    "netlify-screenshot-delay": "3000",
+  },
 };
 
 export default function RootLayout({
