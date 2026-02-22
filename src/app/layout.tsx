@@ -4,14 +4,16 @@ import "./globals.css";
 
 const notoSansTC = Noto_Sans_TC({
   variable: "--font-noto-sans",
-  subsets: ["latin"],
   weight: ["400", "500", "700"],
+  display: "swap",
+  preload: true,
 });
 
 const notoSerifTC = Noto_Serif_TC({
   variable: "--font-noto-serif",
-  subsets: ["latin"],
   weight: ["400", "700"],
+  display: "swap",
+  preload: true,
 });
 
 export const metadata: Metadata = {
