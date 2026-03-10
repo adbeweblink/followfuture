@@ -33,3 +33,7 @@ export {
   generateStrengthAnalysis,
   generateFavorableAdvice,
 } from './strength';
+
+// 大運主題
+export { DAYUN_THEMES } from './dayun-themes';
+export type { DaYunTheme } from './dayun-themes';
