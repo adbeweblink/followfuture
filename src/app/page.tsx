@@ -45,9 +45,9 @@ export default function Home() {
   if (showHero) {
     return (
       <div className="relative min-h-screen min-h-[100dvh] overflow-hidden">
-        {/* 背景圖 */}
+        {/* 背景圖 — 手機版 50% 50% 置中，避免左右裝飾裁切不對稱 */}
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          className="absolute inset-0 bg-no-repeat bg-[length:cover] bg-[position:50%_50%] sm:bg-cover sm:bg-center"
           style={{ backgroundImage: 'url(/hero-bg.png)' }}
         />
         {/* 暗化遮罩確保文字可讀 */}
@@ -105,10 +105,10 @@ export default function Home() {
             whileHover={{ scale: 1.05, boxShadow: '0 0 40px rgba(217, 119, 6, 0.4)' }}
             whileTap={{ scale: 0.98 }}
             onClick={() => setShowHero(false)}
-            className="group relative px-8 sm:px-12 py-3.5 sm:py-4 bg-gradient-to-r from-amber-600 to-red-700 text-white rounded-full text-base sm:text-lg font-medium tracking-wider shadow-2xl shadow-amber-900/30 transition-all duration-300 cursor-pointer"
+            className="group relative px-10 sm:px-12 py-4 sm:py-4 bg-gradient-to-r from-amber-600 to-red-700 text-white rounded-full text-lg sm:text-lg font-medium tracking-wider shadow-2xl shadow-amber-900/30 transition-all duration-300 cursor-pointer"
           >
             <span className="relative z-10 flex items-center gap-2 sm:gap-3">
-              <Sparkles className="w-4 h-4 sm:w-5 sm:h-5" />
+              <Sparkles className="w-5 h-5" />
               開始解盤
             </span>
             <div className="absolute inset-0 rounded-full bg-gradient-to-r from-amber-500 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
