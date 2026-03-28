@@ -34,19 +34,3 @@ body {
   font-family: var(--font-noto-serif), "Noto Serif TC", Georgia, serif !important;
 }
 
-/* Netlify 截圖 fallback：framer-motion SSR 輸出 inline opacity:0，
-   CSS !important 在 JS hydrate 前強制顯示 */
-@keyframes hero-reveal {
-  from { opacity: 0 !important; }
-  to { opacity: 1 !important; transform: none !important; }
-}
-
-[data-hero-content] > * {
-  animation: hero-reveal 0.5s 0.5s both !important;
-}
-
-[data-hero-content] > *:nth-child(1) { animation-delay: 0.3s !important; }
-[data-hero-content] > *:nth-child(2) { animation-delay: 0.5s !important; }
-[data-hero-content] > *:nth-child(3) { animation-delay: 0.7s !important; }
-[data-hero-content] > *:nth-child(4) { animation-delay: 0.9s !important; }
-[data-hero-content] > *:nth-child(5) { animation-delay: 1.1s !important; }

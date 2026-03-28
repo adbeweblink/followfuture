@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Flame, Sparkles, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import BirthInputForm from '@/components/BirthInputForm';
@@ -12,6 +12,9 @@ export default function Home() {
   const [analysis, setAnalysis] = useState<BaZiAnalysis | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [showHero, setShowHero] = useState(true);
+  // SSR 時保持可見（Netlify 截圖），hydrate 後才啟動動畫
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
 
   const handleSubmit = async (input: BirthInput) => {
     setIsLoading(true);
@@ -54,7 +57,7 @@ export default function Home() {
         <div data-hero-content className="relative z-10 flex flex-col items-center justify-center min-h-screen min-h-[100dvh] px-4 text-center">
           {/* 頂部裝飾線 */}
           <motion.div
-            initial={{ scaleX: 0 }}
+            initial={mounted ? { scaleX: 0 } : false}
             animate={{ scaleX: 1 }}
             transition={{ duration: 1.2, ease: 'easeOut' }}
             className="w-24 sm:w-32 h-px bg-gradient-to-r from-transparent via-amber-400 to-transparent mb-6 sm:mb-8"
@@ -62,7 +65,7 @@ export default function Home() {
 
           {/* 副標題 */}
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={mounted ? { opacity: 0, y: 20 } : false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
             className="text-amber-300/90 text-xs sm:text-sm tracking-[0.3em] sm:tracking-[0.5em] uppercase font-medium mb-3 sm:mb-4"
@@ -72,7 +75,7 @@ export default function Home() {
 
           {/* 主標題 */}
           <motion.h1
-            initial={{ opacity: 0, y: 30 }}
+            initial={mounted ? { opacity: 0, y: 30 } : false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
             className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight"
@@ -83,7 +86,7 @@ export default function Home() {
 
           {/* 描述 */}
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={mounted ? { opacity: 0, y: 20 } : false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.7 }}
             className="text-stone-300 text-sm sm:text-base md:text-lg max-w-md sm:max-w-lg mx-auto mb-8 sm:mb-12 leading-relaxed px-4"
@@ -96,7 +99,7 @@ export default function Home() {
 
           {/* CTA 按鈕 */}
           <motion.button
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={mounted ? { opacity: 0, scale: 0.9 } : false}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 1.0 }}
             whileHover={{ scale: 1.05, boxShadow: '0 0 40px rgba(217, 119, 6, 0.4)' }}
@@ -113,7 +116,7 @@ export default function Home() {
 
           {/* 底部裝飾線 */}
           <motion.div
-            initial={{ scaleX: 0 }}
+            initial={mounted ? { scaleX: 0 } : false}
             animate={{ scaleX: 1 }}
             transition={{ duration: 1.2, ease: 'easeOut', delay: 0.8 }}
             className="w-24 sm:w-32 h-px bg-gradient-to-r from-transparent via-amber-400 to-transparent mt-10 sm:mt-16"
@@ -121,7 +124,7 @@ export default function Home() {
 
           {/* 向下提示 */}
           <motion.div
-            initial={{ opacity: 0 }}
+            initial={mounted ? { opacity: 0 } : false}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.5 }}
             className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2"
