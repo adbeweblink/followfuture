@@ -51,7 +51,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-black/30" />
 
         {/* 主內容 */}
-        <div className="relative z-10 flex flex-col items-center justify-center min-h-screen min-h-[100dvh] px-4 text-center">
+        <div data-hero-content className="relative z-10 flex flex-col items-center justify-center min-h-screen min-h-[100dvh] px-4 text-center">
           {/* 頂部裝飾線 */}
           <motion.div
             initial={{ scaleX: 0 }}

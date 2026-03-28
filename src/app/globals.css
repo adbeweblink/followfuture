@@ -33,3 +33,13 @@ body {
 .font-serif {
   font-family: var(--font-noto-serif), "Noto Serif TC", Georgia, serif !important;
 }
+
+/* Netlify 截圖 fallback：確保 framer-motion 動畫元素在 Puppeteer 中可見 */
+@keyframes hero-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+[data-hero-content] {
+  animation: hero-fade-in 0.1s 1s both;
+}

@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   description: "專業八字排盤與命理分析",
   other: {
     // Netlify 截圖延遲，等待字體載入
-    "netlify-screenshot-delay": "3000",
+    "netlify-screenshot-delay": "6000",
   },
 };
 
